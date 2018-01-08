@@ -22,3 +22,23 @@ A Powershell Git hook for preventing checking in of source code with potential A
 7.  Place the following files from this repo into the .git\hooks directory in your solution directory (you may need to show hidden files and directories):  
 &#42; PreCommit.ps1  
 &#42; pre-commit
+
+### Application Insights
+If using application insights ensure the InstrumentationKey node is removed from the InstrumentationKey.config file (it will be detected by the script). Instead, populate the key in a suitable location within the application, storing the value in a PrivateSettings.config.
+
+#### MVC Application Example
+
+*Global.asax.cs*  
+protected void Application_Start()  
+{  
+    Microsoft.ApplicationInsights.Extensibility.TelemetryConfiguration.Active.InstrumentationKey =  
+        ConfigurationManager.AppSettings["InstrumentationKey"];  
+        // ...  
+}  
+
+*PrivateSettings.config*  
+&lt;?xml version="1.0" encoding="utf-8" ?>  
+&lt;appSettings>  
+    &lt;add key="InstrumentationKey" value="..." />  
+    &lt;!-- ... -->  
+&lt;/appSettings>
