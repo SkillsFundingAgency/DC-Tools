@@ -6,8 +6,8 @@
 # UPPERCASE secrets
 [String[]]$secrets = ";PASSWORD=", ".DATABASE.WINDOWS.NET", ".BLOB.CORE.WINDOWS.NET", ".BATCH.AZURE.COM", ";ACCOUNTKEY="
 
-# UPPERCASE Azure key/value patterns (key="key" value="value", value="value==")
-[String[]]$patterns = "(?i)key`s*=`s*`".*`"`s*value(?-i)`s*=`s*`"[A-Z0-9]{32}`"", "(?i)value(?-i)`s*=`s*`"[A-Z0-9+`/]{86}==`""
+# UPPERCASE Azure key/value patterns (key="key" value="value", value="value==", <InstrumentationKey>)
+[String[]]$patterns = "(?i)key`s*=`s*`".*`"`s*value(?-i)`s*=`s*`"[A-Z0-9]{32}`"", "(?i)value(?-i)`s*=`s*`"[A-Z0-9+`/]{86}==`"", "(?i)<`s*InstrumentationKey`s*>"
 
 # UPPERCASE config file endings
 [String[]]$configs = ".XML", ".CONFIG", ".CS", ".JSON", ".JS"
