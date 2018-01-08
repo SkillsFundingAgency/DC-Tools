@@ -10,7 +10,7 @@
 [String[]]$patterns = "(?i)key`s*=`s*`".*`"`s*value(?-i)`s*=`s*`"[A-Z0-9]{32}`"", "(?i)value(?-i)`s*=`s*`"[A-Z0-9+`/]{86}==`"", "(?i)<`s*InstrumentationKey`s*>", "(?i)instrumentationKey:"
 
 # UPPERCASE config file endings
-[String[]]$configs = ".XML", ".CONFIG", ".CS", ".JSON", ".JS"
+[String[]]$configs = ".XML", ".CONFIG", ".CS", ".VB", ".JSON", ".JS", ".CSHTML", ".VBHTML"
 
 # Variables
 [System.Diagnostics.Stopwatch]$sw = [System.Diagnostics.Stopwatch]::StartNew()
