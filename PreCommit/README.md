@@ -24,7 +24,7 @@ A Powershell Git hook for preventing checking in of source code with potential A
 &#42; pre-commit
 
 ### Application Insights
-If using application insights ensure the InstrumentationKey node is removed from the InstrumentationKey.config file (it will be detected by the script). Instead, populate the key in a suitable location within the application, storing the value in a PrivateSettings.config.
+If using application insights ensure the InstrumentationKey node is removed from the InstrumentationKey.config and html view files (it will be detected by the script). Instead, populate the key in a suitable location within the application, storing the value in a PrivateSettings.config.
 
 #### MVC Application Example
 
@@ -42,3 +42,8 @@ protected void Application_Start()
     &lt;add key="InstrumentationKey" value="..." />  
     &lt;!-- ... -->  
 &lt;/appSettings>
+
+*Html views*  
+}({  
+instrumentationKey:'@ViewBag.InstrumentationKey'  
+});
