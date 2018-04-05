@@ -12,6 +12,9 @@
 # UPPERCASE config file endings
 [String[]]$configs = ".XML", ".CONFIG", ".CS", ".VB", ".JSON", ".JS", ".CSHTML", ".VBHTML"
 
+# Filenames or Folders to Skip check on.
+[String[]]$Skips = "AssemblyInfo.cs","\packages\"
+
 # Variables
 [System.Diagnostics.Stopwatch]$sw = [System.Diagnostics.Stopwatch]::StartNew()
 [String[]]$filesArr
@@ -43,7 +46,11 @@ Write-Host "$($task) is scanning $($filesArr.Length) $($configs -Join ',') file(
 For ($i=0; $i -lt $filesArr.Length; $i++) {
     # Check that the file is of interest
     [Boolean]$config = 0
+    [Boolean]$skip = 0
     [String]$currentFile = $filesArr[$i].ToUpper();
+
+	Write-Debug "Processing : $($currentFile)"
+
     For($j=0; $j -lt $configs.Length; $j++) {
         If ($currentFile.EndsWith($configs[$j])) {
             $config = 1
@@ -54,6 +61,18 @@ For ($i=0; $i -lt $filesArr.Length; $i++) {
         Continue
     }
 
+    For($j=0; $j -lt $Skips.Length; $j++) {
+        If ($currentFile.Contains($Skips[$j].ToUpper()))
+        {
+			Write-Host "SKIPPED : $($filesArr[$i]) " -ForegroundColor Yellow
+            $skip = 1
+            Break
+        }
+    }
+    if ($skip -eq 1) {
+        Continue
+    }
+
     # Try to find a leak
     $lineNo = 1
     foreach($line in Get-Content $filesArr[$i]) {
@@ -61,7 +80,7 @@ For ($i=0; $i -lt $filesArr.Length; $i++) {
         # Patterns
         For ($j=0; $j -lt $patterns.Length; $j++) {
             If ($line -cmatch $patterns[$j]) {
-                Write-Host "$($filesArr[$i]) contains posible secret key at line ${lineNo}."
+                Write-Host "$($filesArr[$i]) contains posible secret key at line ${lineNo}." -ForegroundColor Red
                 $found = 1
             }
         }
