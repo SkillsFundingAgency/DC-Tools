@@ -2,6 +2,8 @@
 
 A Powershell Git hook for preventing checking in of source code with potential Azure secrets  
 
+## XML configuration files
+
 1.	If storing application settings, create a file named PrivateSettings.config in each of your projects at the parent level, with the following structure, and use for storing secret configuration items:  
 &lt;?xml version="1.0" encoding="utf-8" ?>  
 &lt;appSettings>  
@@ -22,6 +24,27 @@ A Powershell Git hook for preventing checking in of source code with potential A
 7.  Place the following files from this repo into the .git\hooks directory in your solution directory (you may need to show hidden files and directories):  
 &#42; PreCommit.ps1  
 &#42; pre-commit
+
+## Json configuration files
+For Json configuration files the above steps can be followed, but using Json as the file type. Json configuration files don't support chaining, and so a different method of loading the correct file needs to be used. For example:
+
+```
+#if DEBUG
+        private const string ConfigFile = "privatesettings.json";
+#else
+        private const string ConfigFile = "appsettings.json";
+#endif
+...
+var configBuilder = new ConfigurationBuilder()
+    .SetBasePath(Directory.GetCurrentDirectory())
+    .AddJsonFile(ConfigFile);
+
+IConfiguration configuration = configBuilder.Build();
+```
+
+Also, edit your repositories .gitignore file and add the following directly beneath the beginning 4 comment lines:  
+&#35; Secrets  
+&#42;&#42;/PrivateSettings.json  
 
 ### Application Insights
 If using application insights ensure the InstrumentationKey node is removed from the InstrumentationKey.config and html view files (it will be detected by the script). Instead, populate the key in a suitable location within the application, storing the value in a PrivateSettings.config.
