@@ -46,7 +46,13 @@ Also, edit your repositories .gitignore file and add the following directly bene
 &#35; Secrets  
 &#42;&#42;/PrivateSettings.json  
 
-### Application Insights
+## Service Fabric
+For Service Fabric any secrets are stored in the local 1 & 5 node configuration files. Edit your repositories .gitignore file and add the following directly beneath the beginning 4 comment lines:  
+
+&#42;&#42;/ApplicationParameters/Local.1Node.xml    
+&#42;&#42;/ApplicationParameters/Local.5Node.xml
+
+## Application Insights
 If using application insights ensure the InstrumentationKey node is removed from the InstrumentationKey.config and html view files (it will be detected by the script). Instead, populate the key in a suitable location within the application, storing the value in a PrivateSettings.config.
 
 #### MVC Application Example
