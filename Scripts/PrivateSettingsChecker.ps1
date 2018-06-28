@@ -30,7 +30,7 @@ For ($i=0; $i -lt $filesArr.Length; $i++) {
         $fileToCreate = "$($filesArr[$i].DirectoryName)\PrivateSettings.config"
         if (-Not(Test-Path $fileToCreate)) {
             Write-Host "Creating: $fileToCreate"
-            New-Item $fileToCreate -type file
+            New-Item $fileToCreate -type file -Value '<appSettings/>'
         }
     }        
 
