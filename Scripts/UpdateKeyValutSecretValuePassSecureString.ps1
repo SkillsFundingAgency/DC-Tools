@@ -5,17 +5,12 @@ Param(
     
    [Parameter(Mandatory=$true)] [string] $KeyValutName,
    [Parameter(Mandatory=$true)] [string] $SecretName,
-   [Parameter(Mandatory=$true)] [string] $SecretValue,
+   [Parameter(Mandatory=$true)] [SecureString] $SecretValue,
    
    [Parameter(Mandatory=$false)] [switch] $CopyCurrentTags = $false,
    [Parameter(Mandatory=$false)] [switch] $IsDebug = $false
 )
 
-[SecureString] $secretval = ConvertTo-SecureString "$($SecretValue)" -AsPlainText -Force     
-
-.\UpdateKeyValutSecretValuePassSecureString.ps1 -KeyValutName $KeyValutName -SecretName $SecretName -SecretValue $secretval -CopyCurrentTags $CopyCurrentTags -IsDebug $IsDebug
-
-<#
     [string] $ContentType = "";
     [Hashtable] $Tags = New-Object -TypeName Hashtable;
 
@@ -39,9 +34,8 @@ Param(
 			    throw [System.Exception] "KeyValut : $($KeyValutName) |  SecretValue : $($SecretValue) value passed is not valid"
             }
             
-			[SecureString] $secretval = ConvertTo-SecureString "$($SecretValue)" -AsPlainText -Force     
-			Write-Debug " ###################################################" 
-			
+    		Write-Debug " ###################################################" 
+
             $x = Get-AzureKeyVaultSecret -VaultName $KeyValutName -Name $SecretName -ErrorAction SilentlyContinue
 
             if(($x)-and($x-ne$null))
@@ -63,14 +57,14 @@ Param(
 						$Tags = $x.Tags;
 					}
 					Write-Debug "Updating";
-					$secret = Set-AzureKeyVaultSecret -VaultName "$($KeyValutName)" -Name "$($SecretName)" -SecretValue $secretval -Tag $Tags -ContentType $ContentType
+					$secret = Set-AzureKeyVaultSecret -VaultName "$($KeyValutName)" -Name "$($SecretName)" -SecretValue $SecretValue -Tag $Tags -ContentType $ContentType
 					Write-Debug "Updated..";
                 }
             }
 			else
 			{
 				Write-Debug "Not Found so Creating";
-				$secret = Set-AzureKeyVaultSecret -VaultName "$($KeyValutName)" -Name "$($SecretName)" -SecretValue $secretval -Tag $Tags -ContentType $ContentType
+				$secret = Set-AzureKeyVaultSecret -VaultName "$($KeyValutName)" -Name "$($SecretName)" -SecretValue $SecretValue -Tag $Tags -ContentType $ContentType
 				Write-Debug "  Created..";
 			}
 	    }	  
@@ -87,4 +81,3 @@ Param(
             Write-Debug " ###################################################" 
 
         } 
-#>
