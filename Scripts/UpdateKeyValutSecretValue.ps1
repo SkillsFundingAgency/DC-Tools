@@ -13,9 +13,8 @@ Param(
 
 [SecureString] $secretval = ConvertTo-SecureString "$($SecretValue)" -AsPlainText -Force     
 
-.\UpdateKeyValutSecretValuePassSecureString.ps1 -KeyValutName $KeyValutName -SecretName $SecretName -SecretValue $secretval -CopyCurrentTags $CopyCurrentTags -IsDebug $IsDebug
+#.\UpdateKeyValutSecretValuePassSecureString.ps1 -KeyValutName $KeyValutName -SecretName $SecretName -SecretValue $secretval -CopyCurrentTags $CopyCurrentTags -IsDebug $IsDebug
 
-<#
     [string] $ContentType = "";
     [Hashtable] $Tags = New-Object -TypeName Hashtable;
 
@@ -87,4 +86,3 @@ Param(
             Write-Debug " ###################################################" 
 
         } 
-#>
