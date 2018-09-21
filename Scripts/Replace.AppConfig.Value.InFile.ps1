@@ -21,19 +21,21 @@ else
     }
     else
     {
+        if ( $EnableDebug) { Write-host "Looking for : $($AppSettingsKeyName)"; }
+        
         ## Check Connection String for Setting
         $obj = ($doc.configuration.connectionStrings.add | where {$_.Name -eq "$($AppSettingsKeyName)"})
 
         if (!$obj)
         {
-           if ( $EnableDebug) { Write-host "NOT Found in Connection String "; }
+           #if ( $EnableDebug) { Write-host "NOT Found in Connection String "; }
         }
         else
         {
             if ( $EnableDebug) { write-host "Before Value : $($obj.connectionString)" }
             $obj.connectionString = $AppSettingsKeyValue
 
-            if ( $EnableDebug) { write-host "after Value : $($obj.connectionString)" }
+            if ( $EnableDebug) { write-host " After Value : $($obj.connectionString)" }
             $doc.Save($appConfigFile)
             $Found = $true
         }
@@ -43,14 +45,14 @@ else
 
         if (!$obj)
         {
-           if ( $EnableDebug) { Write-host "NOT Found in App Settings"; }
+           #if ( $EnableDebug) { Write-host "NOT Found in App Settings"; }
         }
         else
         {
-            if ( $EnableDebug) { write-host "Before Value : $($obj.value)" }
-            $obj.value = $AppSettingsKeyValue
+            if ( $EnableDebug) { write-host "Before Value : $($obj.Value)" }
+            $obj.Value = $AppSettingsKeyValue
 
-            if ( $EnableDebug) { write-host "after Value : $($obj.value)" }
+            if ( $EnableDebug) { write-host "after Value : $($obj.Value)" }
             $doc.Save($appConfigFile)
             $Found = $true
         }
