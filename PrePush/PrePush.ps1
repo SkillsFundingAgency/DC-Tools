@@ -18,7 +18,7 @@
 # Variables
 [System.Diagnostics.Stopwatch]$sw = [System.Diagnostics.Stopwatch]::StartNew()
 [String[]]$filesArr
-[String]$task = "Pre-Commit"
+[String]$task = "Pre-Push"
 
 Write-Host 'Executing Task : ' $task
 
